@@ -4,7 +4,7 @@
              android:layout_height="match_parent"
               android:orientation="vertical"
              android:id="@+id/fragment_hallway"
-             tools:context="me.pihanya.cleverhome.fragments.HallwayFragment">
+             tools:context=".fragments.HallwayFragment">
 
     <LinearLayout
             android:orientation="horizontal"

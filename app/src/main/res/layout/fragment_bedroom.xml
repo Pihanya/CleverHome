@@ -1,24 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="me.pihanya.cleverhome.fragments.BedroomFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:id="@+id/fragment_bedroom"
+              tools:context=".fragments.HallwayFragment">
 
     <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center_horizontal">
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
+            android:layout_height="wrap_content" android:paddingTop="?attr/actionBarSize">
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/hello_blank_fragment"/>
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Яркость"
+                android:id="@+id/bedroom_text_brightness" android:enabled="true" android:gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <SeekBar
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:id="@+id/bedroom_seekbar_brightness" android:layout_weight="0.71" android:indeterminate="false"
+                android:max="1024" android:progress="0" android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp" android:layout_marginRight="30dp"/>
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>
