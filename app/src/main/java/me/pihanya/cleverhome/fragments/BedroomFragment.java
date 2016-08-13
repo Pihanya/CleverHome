@@ -7,9 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
+import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import me.pihanya.cleverhome.R;
 import me.pihanya.cleverhome.api.Api;
 
@@ -38,7 +37,7 @@ public class BedroomFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public BedroomFragment () {
+    public BedroomFragment() {
         // Required empty public constructor
     }
 
@@ -51,7 +50,7 @@ public class BedroomFragment extends Fragment {
      * @return A new instance of fragment BedroomFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BedroomFragment newInstance (String param1, String param2) {
+    public static BedroomFragment newInstance( String param1, String param2 ) {
         BedroomFragment fragment = new BedroomFragment();
         Bundle args = new Bundle();
         args.putString( ARG_PARAM1, param1 );
@@ -61,7 +60,7 @@ public class BedroomFragment extends Fragment {
     }
 
     @Override
-    public void onCreate (Bundle savedInstanceState) {
+    public void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
 
         if ( getArguments() != null ) {
@@ -73,39 +72,48 @@ public class BedroomFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView (LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState) {
+    public View onCreateView( LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState ) {
         // Inflate the layout for this fragment
         currentView = inflater.inflate( R.layout.fragment_bedroom, container, false );
 
 
+        final TextView textBrightness = (TextView) currentView.findViewById( R.id.bedroom_text_brightness );
         final SeekBar seekBrightness = (SeekBar) currentView.findViewById( R.id.bedroom_seekbar_brightness );
 
-        final TextView textBrightness = (TextView) currentView.findViewById( R.id.bedroom_text_brightness );
+        Switch switchEnabled = (Switch) currentView.findViewById( R.id.bedroom_switch_enabled );
+
+        Button colorButton = (Button) currentView.findViewById( R.id.bedroom_button_color );
 
         seekBrightness.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged (SeekBar seekBar, int i, boolean b) {
+            public void onProgressChanged( SeekBar seekBar, int i, boolean b ) {
                 Toast.makeText( currentView.getContext(), "Progress changed", Toast.LENGTH_SHORT ).show();
 
                 textBrightness.setText( String.valueOf( seekBrightness.getProgress() ) );
 
                 new Timer().schedule( new TimerTask() {
                     @Override
-                    public void run () {
-                        Api.lightning( 1, seekBrightness.getProgress(), 1024, 10, 1 );
+                    public void run() {
+                        Api.brightness( 0, seekBrightness.getProgress() );
                     }
                 }, 0L );
             }
 
             @Override
-            public void onStartTrackingTouch (SeekBar seekBar) {
+            public void onStartTrackingTouch( SeekBar seekBar ) {
 
             }
 
             @Override
-            public void onStopTrackingTouch (SeekBar seekBar) {
+            public void onStopTrackingTouch( SeekBar seekBar ) {
 
+            }
+        } );
+
+        colorButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View view ) {
             }
         } );
 
@@ -113,14 +121,14 @@ public class BedroomFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed (Uri uri) {
+    public void onButtonPressed( Uri uri ) {
         if ( mListener != null ) {
             mListener.onFragmentInteraction( uri );
         }
     }
 
     @Override
-    public void onAttach (Context context) {
+    public void onAttach( Context context ) {
         super.onAttach( context );
         if ( context instanceof OnFragmentInteractionListener ) {
             mListener = (OnFragmentInteractionListener) context;
@@ -131,7 +139,7 @@ public class BedroomFragment extends Fragment {
     }
 
     @Override
-    public void onDetach () {
+    public void onDetach() {
         super.onDetach();
         mListener = null;
     }
@@ -148,6 +156,6 @@ public class BedroomFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction (Uri uri);
+        void onFragmentInteraction( Uri uri );
     }
 }
