@@ -13,7 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import me.pihanya.cleverhome.R;
+import me.pihanya.cleverhome.fragments.BedroomFragment;
+import me.pihanya.cleverhome.fragments.GuestroomFragment;
 import me.pihanya.cleverhome.fragments.HallwayFragment;
+import me.pihanya.cleverhome.fragments.WashroomFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -82,19 +85,15 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if ( id == R.id.nav_camera ) {
+        if ( id == R.id.nav_bedroom ) {
             // Handle the camera action
-            getFragmentManager().beginTransaction().replace( R.id.activity_main, new HallwayFragment() ).commit();
-        } else if ( id == R.id.nav_gallery ) {
-
-        } else if ( id == R.id.nav_slideshow ) {
-
-        } else if ( id == R.id.nav_manage ) {
-
-        } else if ( id == R.id.nav_share ) {
-
-        } else if ( id == R.id.nav_send ) {
-
+            getFragmentManager().beginTransaction().replace( R.id.fragment_container, new BedroomFragment() ).commit();
+        } else if ( id == R.id.nav_guestroom ) {
+            getFragmentManager().beginTransaction().replace( R.id.fragment_container, new GuestroomFragment() ).commit();
+        } else if ( id == R.id.nav_hallway ) {
+            getFragmentManager().beginTransaction().replace( R.id.fragment_container, new HallwayFragment() ).commit();
+        } else if ( id == R.id.nav_washroom ) {
+            getFragmentManager().beginTransaction().replace( R.id.fragment_container, new WashroomFragment() ).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById( R.id.activity_main );

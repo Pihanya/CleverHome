@@ -16,14 +16,14 @@ import java.util.TimerTask;
  * Created by pihanya on 11.08.16.
  */
 public class Api {
-    private static int RECONNECT_TIME;
-    private static int RECONNECT_DEPTH;
+    private static int RECONNECT_TIME = 1000;
+    private static int RECONNECT_DEPTH = 5;
 
+    private static String HOME_IP = "192.168.1.48:8080";
     private static String DEFAULT_PASSWORD = "qwerty123";
 
     private static boolean isConnected = false;
-
-    private static String homeIp;
+    private static boolean isAuthificated = false;
 
     public static Map<String, Object> auth (String password, Integer token) {
         Map<String, Object> args = new HashMap<>();
@@ -59,9 +59,9 @@ public class Api {
     public static Map<String, Object> set (Integer slot, Integer value, Integer token) {
         Map<String, Object> args = new HashMap<>();
 
-            args.put( "slot", slot );
-            args.put( "value", value );
-            args.put( "token", token );
+        args.put( "slot", slot );
+        args.put( "value", value );
+        args.put( "token", token );
 
         return sendRequest( "set", args );
     }
@@ -69,8 +69,8 @@ public class Api {
     public static Map<String, Object> set (Integer slot, Integer value) {
         Map<String, Object> args = new HashMap<>();
 
-            args.put( "slot", slot );
-            args.put( "value", value );
+        args.put( "slot", slot );
+        args.put( "value", value );
 
         return sendRequest( "set", args );
     }
@@ -169,9 +169,6 @@ public class Api {
     public static Map<String, Object> sendRequest (String method, Map<String, Object> args) {
         HashMap<String, Object> map = new HashMap<>();
 
-        if ( !isConnected )
-            return map;
-
         try {
             HttpURLConnection connection = connectTo( method + parseAgrs( args ) );
             InputStream stream = new BufferedInputStream( connection.getInputStream() );
@@ -228,12 +225,16 @@ public class Api {
             String value = pair.substring( indexOf + 1 );
 
             try {
-                map.put( key, Double.parseDouble( value ) );
+                map.put( key, Boolean.parseBoolean( value ) );
             } catch (Exception e) {
                 try {
-                    map.put( key, Integer.parseInt( value ) );
+                    map.put( key, Double.parseDouble( value ) );
                 } catch (Exception e1) {
-                    map.put( key, value );
+                    try {
+                        map.put( key, Integer.parseInt( value ) );
+                    } catch (Exception e2) {
+                        map.put( key, value );
+                    }
                 }
             }
         }
@@ -252,11 +253,11 @@ public class Api {
 
         if ( depth < RECONNECT_DEPTH ) {
             try {
-                URL url = new URL( String.format( "http://%s/%s", homeIp, urlString ) );
+                URL url = new URL( String.format( "http://%s/%s", HOME_IP, urlString ) );
                 connection[0] = (HttpURLConnection) url.openConnection();
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.v( "HomeConnection", String.format( "HttpURLConnection to ip %s/%s failed. Reconnecting in %dms", homeIp, urlString, RECONNECT_TIME ) );
+                Log.v( "HomeConnection", String.format( "HttpURLConnection to ip %s/%s failed. Reconnecting in %dms", HOME_IP, urlString, RECONNECT_TIME ) );
 
                 new Timer().schedule( new TimerTask() {
                     @Override

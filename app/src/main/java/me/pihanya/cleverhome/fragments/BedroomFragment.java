@@ -1,9 +1,9 @@
 package me.pihanya.cleverhome.fragments;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import me.pihanya.cleverhome.R;
+import me.pihanya.cleverhome.api.Api;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,9 +86,16 @@ public class BedroomFragment extends Fragment {
         seekBrightness.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged (SeekBar seekBar, int i, boolean b) {
-                Toast.makeText( currentView.getContext(), "Progress changed", Toast.LENGTH_SHORT);
+                Toast.makeText( currentView.getContext(), "Progress changed", Toast.LENGTH_SHORT ).show();
 
-                textBrightness.setText( seekBrightness.getProgress() );
+                textBrightness.setText( String.valueOf( seekBrightness.getProgress() ) );
+
+                new Timer().schedule( new TimerTask() {
+                    @Override
+                    public void run () {
+                        Api.lightning( 1, seekBrightness.getProgress(), 1024, 10, 1 );
+                    }
+                }, 0L );
             }
 
             @Override
