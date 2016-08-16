@@ -4,12 +4,14 @@ import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import me.pihanya.cleverhome.R;
+import me.pihanya.cleverhome.activities.MainActivity;
 import me.pihanya.cleverhome.api.Api;
 
 import java.util.Timer;
@@ -25,6 +27,9 @@ import java.util.TimerTask;
  */
 public class BedroomFragment extends Fragment {
     private static View currentView;
+
+    private static String TAG = "Bedroom";
+    private static int ROOM_NUMBER = 0;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,19 +88,19 @@ public class BedroomFragment extends Fragment {
 
         Switch switchEnabled = (Switch) currentView.findViewById( R.id.bedroom_switch_enabled );
 
+        final ColorPicker cp = new ColorPicker( MainActivity.getInstance(), 0, 0, 0 );
+
         Button colorButton = (Button) currentView.findViewById( R.id.bedroom_button_color );
 
         seekBrightness.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged( SeekBar seekBar, int i, boolean b ) {
-                Toast.makeText( currentView.getContext(), "Progress changed", Toast.LENGTH_SHORT ).show();
-
                 textBrightness.setText( String.valueOf( seekBrightness.getProgress() ) );
 
                 new Timer().schedule( new TimerTask() {
                     @Override
                     public void run() {
-                        Api.brightness( 0, seekBrightness.getProgress() );
+                        Api.brightness( ROOM_NUMBER, seekBrightness.getProgress() );
                     }
                 }, 0L );
             }
@@ -111,9 +116,33 @@ public class BedroomFragment extends Fragment {
             }
         } );
 
+        switchEnabled.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged( CompoundButton compoundButton, boolean b ) {
+                Log.v( TAG, "Lightning was set " + ( b ? "on" : "off" ) );
+                Api.lightning( ROOM_NUMBER, b ? 1 : 0, -1, -1 );
+            }
+        } );
+
         colorButton.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick( View view ) {
+            public void onClick( View v ) {
+                cp.show();
+
+                Log.v( TAG, "Showed Color Picker" );
+
+                Button colorOkButton = (Button) cp.findViewById( R.id.okColorButton );
+
+                colorOkButton.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick( View v ) {
+                        Log.v( TAG, String.format( "R: %d; G: %d; B: %d; C: %d;", cp.getRed(), cp.getGreen(), cp.getBlue(), cp.getColor() ) );
+
+                        cp.dismiss();
+
+                        Api.color( ROOM_NUMBER, cp.getRed(), cp.getGreen(), cp.getBlue() );
+                    }
+                } );
             }
         } );
 

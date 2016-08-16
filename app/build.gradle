@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.1'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId "me.pihanya.cleverhome"
@@ -24,9 +24,11 @@ repositories {
 }
 
 
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    //    compile 'com.github.danielnilsson9:color-picker-view:1.4.0@aar'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
     compile 'com.android.support:support-v4:24.1.1'
