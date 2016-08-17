@@ -13,10 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import me.pihanya.cleverhome.R;
-import me.pihanya.cleverhome.fragments.BedroomFragment;
-import me.pihanya.cleverhome.fragments.GuestroomFragment;
-import me.pihanya.cleverhome.fragments.HallwayFragment;
-import me.pihanya.cleverhome.fragments.WashroomFragment;
+import me.pihanya.cleverhome.fragments.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,6 +47,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
+
+        getFragmentManager().beginTransaction().replace( R.id.fragment_container, new MainFragment() ).commit();
     }
 
     @Override
@@ -90,8 +89,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if ( id == R.id.nav_bedroom ) {
-            // Handle the camera action
+        if ( id == R.id.nav_main ) {
+            getFragmentManager().beginTransaction().replace( R.id.fragment_container, new MainFragment() ).commit();
+        } else if ( id == R.id.nav_bedroom ) {
             getFragmentManager().beginTransaction().replace( R.id.fragment_container, new BedroomFragment() ).commit();
         } else if ( id == R.id.nav_guestroom ) {
             getFragmentManager().beginTransaction().replace( R.id.fragment_container, new GuestroomFragment() ).commit();

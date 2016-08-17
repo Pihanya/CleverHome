@@ -101,6 +101,7 @@ public class BedroomFragment extends Fragment {
                     @Override
                     public void run() {
                         Api.brightness( ROOM_NUMBER, seekBrightness.getProgress() );
+                        Log.v( TAG, "Brightness was set to " + seekBrightness.getProgress() );
                     }
                 }, 0L );
             }
@@ -112,7 +113,7 @@ public class BedroomFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch( SeekBar seekBar ) {
-
+                textBrightness.setText( R.string.text_brightness );
             }
         } );
 
@@ -128,15 +129,12 @@ public class BedroomFragment extends Fragment {
             @Override
             public void onClick( View v ) {
                 cp.show();
-
-                Log.v( TAG, "Showed Color Picker" );
-
                 Button colorOkButton = (Button) cp.findViewById( R.id.okColorButton );
 
                 colorOkButton.setOnClickListener( new View.OnClickListener() {
                     @Override
                     public void onClick( View v ) {
-                        Log.v( TAG, String.format( "R: %d; G: %d; B: %d; C: %d;", cp.getRed(), cp.getGreen(), cp.getBlue(), cp.getColor() ) );
+                        Log.v( TAG, String.format( "Color was changed. R: %d; G: %d; B: %d;", cp.getRed(), cp.getGreen(), cp.getBlue() ) );
 
                         cp.dismiss();
 

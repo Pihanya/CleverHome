@@ -2,63 +2,68 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
               android:id="@+id/fragment_bedroom"
-              tools:context=".fragments.HallwayFragment">
+              tools:context=".fragments.HallwayFragment" android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:scrollbarAlwaysDrawVerticalTrack="false"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="15dp">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Свет"
                 android:id="@+id/bedroom_text_enabled" android:enabled="true" android:gravity="center"
-        />
-    </LinearLayout>
-    <LinearLayout
+                android:layout_centerInParent="true"/>
+    </RelativeLayout>
+    <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_marginTop="15dp">
         <Switch
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/bedroom_switch_enabled" android:checked="false" android:layout_marginRight="170dp"/>
-    </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="30dp">
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/bedroom_switch_enabled" android:checked="false" android:enabled="true"
+                android:layout_gravity="center_horizontal" android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceMedium" android:text="Цвет"
-                  android:id="@+id/bedroom_text_color" android:enabled="true" android:gravity="center"/>
-    </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                  android:id="@+id/bedroom_text_color" android:enabled="true" android:gravity="center"
+                  android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
         <Button
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Выбрать..."
-                android:id="@+id/bedroom_button_color" android:layout_marginLeft="145dp" android:layout_marginTop="15dp"/>
-    </LinearLayout>
-    <LinearLayout
+                android:id="@+id/bedroom_button_color"
+                android:layout_centerHorizontal="true" android:enabled="true" android:singleLine="true"
+                android:layout_marginTop="15dp"/>
+    </RelativeLayout>
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:paddingTop="30dp">
+            android:layout_height="wrap_content" android:layout_marginTop="30dp">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Яркость"
-                android:id="@+id/bedroom_text_brightness" android:enabled="true" android:gravity="center"/>
-    </LinearLayout>
-    <LinearLayout
+                android:text="@string/text_brightness"
+                android:id="@+id/bedroom_text_brightness" android:enabled="true" android:gravity="center"
+                android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <SeekBar
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:id="@+id/bedroom_seekbar_brightness" android:layout_weight="0.71" android:indeterminate="false"
-                android:max="10" android:progress="0" android:layout_marginTop="15dp"
-                android:layout_marginLeft="50dp" android:layout_marginRight="50dp"/>
-    </LinearLayout>
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/bedroom_seekbar_brightness" android:indeterminate="false"
+                android:max="10" android:progress="0"
+                android:layout_centerHorizontal="true" android:layout_marginTop="15dp"/>
+    </RelativeLayout>
 
 </LinearLayout>
